@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tactile — UI Micro-interaction Lab</title>
+  <meta name="description" content="Tactile is an open lab of hand-built UI micro-interactions: fur, fabric, glass, goo and jelly. Every tile ships a copy-paste snippet.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#lab">Skip to the lab</a>
+
+  <!-- Shared SVG filters -->
+  <svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="cloth" x="-12%" y="-35%" width="124%" height="170%" color-interpolation-filters="sRGB">
+        <feTurbulence id="clothTurb" type="fractalNoise" baseFrequency="0.03 0.008" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap id="clothDisp" in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" result="disp"/>
+        <feDiffuseLighting id="clothLight" in="noise" surfaceScale="1" diffuseConstant="1.1" lighting-color="#ffffff" result="light">
+          <feDistantLight id="clothSun" azimuth="235" elevation="48"/>
+        </feDiffuseLighting>
+        <feComposite in="light" in2="disp" operator="in" result="lit"/>
+        <feBlend in="lit" in2="disp" mode="soft-light"/>
+      </filter>
+      <filter id="goo" x="-20%" y="-50%" width="140%" height="200%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="4.5" result="blur"/>
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9" result="goo"/>
+        <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <header class="nav" role="banner">
+    <a class="brand" href="#top" aria-label="Tactile, back to top">
+      <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+        <defs>
+          <linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ffd29a"/><stop offset=".55" stop-color="#ff8fb1"/><stop offset="1" stop-color="#9d8cff"/>
+          </linearGradient>
+        </defs>
+        <rect x="2" y="2" width="28" height="28" rx="10" fill="url(#logoG)"/>
+        <circle cx="16" cy="16" r="5.5" fill="#0c0c10"/>
+        <circle cx="14.4" cy="14.4" r="1.6" fill="#fff" opacity=".85"/>
+      </svg>
+      <span>Tactile</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#lab">The bench</a></li>
+        <li><a href="#principles">Principles</a></li>
+        <li><a class="nav-pill" href="https://github.com/tabishhassan5121472?tab=repositories">More projects</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-bg" aria-hidden="true">
+        <span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span>
+        <span class="dots"></span>
+      </div>
+      <p class="eyebrow"><span class="pulse" aria-hidden="true"></span> Open micro-interaction lab &middot; Vol. 01</p>
+      <h1 class="hero-title" id="heroTitle">
+        <span class="sr-only">Interfaces you can almost touch.</span>
+        <span class="hero-visual" aria-hidden="true">
+          <span class="line"><span class="w">Interfaces</span> <span class="w">you</span></span>
+          <span class="line"><span class="w">can</span> <span class="w">almost</span></span>
+          <span class="line"><span class="w accent">touch.</span></span>
+        </span>
+      </h1>
+      <div class="hero-foot">
+        <p class="lede">Eight hand-built components made of fur, cloth, frosted glass, goo and jelly. Poke them, drag them, break them &mdash; then copy the code. Every snippet is a single self-contained file.</p>
+        <a class="cta" href="#lab">
+          <span>Enter the lab</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <ul class="stats" aria-label="Lab facts">
+        <li><strong>08</strong><span>components</span></li>
+        <li><strong>0</strong><span>dependencies per snippet</span></li>
+        <li><strong>100%</strong><span>drawn in code</span></li>
+      </ul>
+    </section>
+
+    <section class="lab" id="lab" aria-labelledby="labTitle">
+      <div class="lab-head">
+        <h2 id="labTitle">The bench</h2>
+        <p>Hover, drag, type, press. Each tile copies a working snippet to your clipboard.</p>
+      </div>
+
+      <div class="grid" id="grid">
+        <!-- 01 Fluffy -->
+        <article class="tile t-fluffy" aria-labelledby="t1">
+          <div class="tile-stage stage-fluffy" id="fluffyStage">
+            <button class="fluffy" id="fluffyBtn" type="button">
+              <canvas id="fluffyCanvas" aria-hidden="true"></canvas>
+              <span class="fluffy-label">Contact</span>
+            </button>
+            <p class="stage-hint" aria-hidden="true">move your cursor across the fur</p>
+          </div>
+          <footer class="tile-meta">
+            <div><span class="tile-num">01</span><h3 id="t1">Fluffy button</h3><p>1,800 canvas strands with spring physics</p></div>
+            <button class="copy-btn" type="button" data-copy="fluffy" data-name="Fluffy button" aria-label="Copy code for Fluffy button">Copy code</button>
+          </footer>
+        </article>
+
+        <!-- 02 Fabric -->
+        <article class="tile t-fabric" aria-labelledby="t2">
+          <div class="tile-stage stage-fabric">
+            <button class="fabric" id="fabricBtn" type="button">
+              <span class="fabric-surface"><span class="fabric-label">Explore</span></span>
+            </button>
+            <p class="stage-hint" aria-hidden="true">hover to ripple &middot; press to tug</p>
+          </div>
+          <footer class="tile-meta">
+            <div><span class="tile-num">02</span><h3 id="t2">Fabric button</h3><p>feTurbulence + feDisplacementMap + diffuse light</p></div>
+            <button class="copy-btn" type="button" data-copy="fabric" data-name="Fabric button" aria-label="Copy code for Fabric button">Copy code</button>
+          </footer>
+        </article>
+
+        <!-- 03 OTP -->
+        <article class="tile t-otp" aria-labelledby="t3">
+          <div class="tile-stage stage-otp">
+            <svg class="waves w0" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs>
+                <linearGradient id="gw1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff1c9"/><stop offset=".45" stop-color="#f0b14f"/><stop offset="1" stop-color="#7a3d0c"/></linearGradient>
+                <linearGradient id="gw2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd98a"/><stop offset=".6" stop-color="#c8781f"/><stop offset="1" stop-color="#3a1904"/></linearGradient>
+                <linearGradient id="gw3" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2a1203"/><stop offset=".5" stop-color="#a65d16"/><stop offset="1" stop-color="#ffe7a8"/></linearGradient>
+                <radialGradient id="gwGlow" cx=".5" cy=".4" r=".6"><stop offset="0" stop-color="#ffcf73" stop-opacity=".55"/><stop offset="1" stop-color="#ffcf73" stop-opacity="0"/></radialGradient>
+              </defs><rect width="600" height="600" fill="#160b03"/><rect width="600" height="600" fill="url(#gwGlow)"/></svg>
+            <svg class="waves w2" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path d="M-80 200 C 80 80, 220 300, 380 180 S 620 40, 720 120 L 720 -60 L -80 -60 Z" fill="url(#gw2)"/></svg>
+            <svg class="waves w1" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path d="M-80 380 C 60 240, 200 470, 340 330 S 600 160, 700 260 L 700 700 L -80 700 Z" fill="url(#gw1)"/><path d="M-40 300 C 100 260, 180 360, 320 300 S 520 220, 680 300" fill="none" stroke="#fff4d6" stroke-opacity=".5" stroke-width="2"/></svg>
+            <svg class="waves w3" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path d="M-60 520 C 120 420, 260 600, 420 480 S 640 400, 700 460 L 700 700 L -60 700 Z" fill="url(#gw3)" opacity=".9"/></svg>
+            <form class="otp-card" id="otpForm" novalidate aria-describedby="otpHelp">
+              <p class="otp-kicker">Two-step check</p>
+              <h4 class="otp-title">Enter your code</h4>
+              <p class="otp-help" id="otpHelp">We sent 4 digits to your device. Any code works in this demo.</p>
+              <div class="otp-slot">
+                <div class="otp-inputs" role="group" aria-label="One-time code">
+                  <input class="otp-input" type="text" inputmode="numeric" autocomplete="one-time-code" aria-label="Digit 1">
+                  <input class="otp-input" type="text" inputmode="numeric" autocomplete="off" aria-label="Digit 2">
+                  <input class="otp-input" type="text" inputmode="numeric" autocomplete="off" aria-label="Digit 3">
+                  <input class="otp-input" type="text" inputmode="numeric" autocomplete="off" aria-label="Digit 4">
+                </div>
+                <span class="otp-spinner" aria-hidden="true"></span>
+                <svg class="otp-success" viewBox="0 0 80 80" aria-hidden="true">
+                  <circle class="ring-bg" cx="40" cy="40" r="32"/>
+                  <circle class="ring" cx="40" cy="40" r="32" transform="rotate(-90 40 40)"/>
+                  <path class="check" d="M26 41 l9 9 l19 -20"/>
+                </svg>
+              </div>
+              <button class="otp-verify" id="otpVerify" type="submit" disabled>Verify</button>
+              <p class="otp-status" id="otpStatus" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+          <footer class="tile-meta">
+            <div><span class="tile-num">03</span><h3 id="t3">Glassy OTP</h3><p>Auto-advance, paste, backspace, success draw</p></div>
+            <button class="copy-btn" type="button" data-copy="otp" data-name="Glassy OTP" aria-label="Copy code for Glassy OTP">Copy code</button>
+          </footer>
+        </article>
+
+        <!-- 04 Carousel -->
+        <article class="tile t-carousel" aria-labelledby="t4">
+          <div class="tile-stage stage-carousel">
+            <div class="coverflow" id="coverflow" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Poster carousel. Drag or use arrow keys.">
+              <div class="cf-track" id="cfTrack"></div>
+            </div>
+            <div class="cf-panel" aria-live="polite">
+              <div class="cf-info">
+                <span class="cf-index" id="cfIndex">04 / 07</span>
+                <h4 class="cf-title" id="cfTitle">Poster</h4>
+                <p class="cf-desc" id="cfDesc"></p>
+              </div>
+              <div class="cf-controls">
+                <button class="cf-arrow" id="cfPrev" type="button" aria-label="Previous poster"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button class="cf-arrow" id="cfNext" type="button" aria-label="Next poster"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              </div>
+            </div>
+          </div>
+          <footer class="tile-meta">
+            <div><span class="tile-num">04</span><h3 id="t4">Glassy 3D carousel</h3><p>CSS 3D coverflow, drag with momentum</p></div>
+            <button class="copy-btn" type="button" data-copy="carousel" data-name="3D carousel" aria-label="Copy code for Glassy 3D carousel">Copy code</button>
+          </footer>
+        </article>
+
+        <!-- 05 Magnetic -->
+        <article class="tile t-mag" aria-labelledby="t5">
+          <div class="tile-stage stage-mag" id="magStage">
+            <button class="magnetic" id="magBtn" type="button"><span class="mag-label">Hold on</span></button>
+          </div>
+          <footer class="tile-meta">
+            <div><span class="tile-num">05</span><h3 id="t5">Magnetic button</h3><p>Pull, then elastic snap-back</p></div>
+            <button class="copy-btn" type="button" data-copy="magnetic" data-name="Magnetic button" aria-label="Copy code for Magnetic button">Copy code</button>
+          </footer>
+        </article>
+
+        <!-- 06 Liquid toggle -->
+        <article class="tile t-toggle" aria-labelledby="t6">
+          <div class="tile-stage stage-toggle">
+            <button class="liquid" id="liquidSwitch" type="button" role="switch" aria-checked="false" aria-label="Night mode">
+              <svg viewBox="0 0 120 60" aria-hidden="true">
+                <rect class="liquid-track" x="2" y="2" width="116" height="56" rx="28"/>
+                <g filter="url(#goo)">
+                  <circle class="blob b3" cx="30" cy="30" r="9"/>
+                  <circle class="blob b2" cx="30" cy="30" r="13"/>
+                  <circle class="blob b1" cx="30" cy="30" r="19"/>
+                </g>
+              </svg>
+            </button>
+            <p class="toggle-state" aria-hidden="true">Night mode <b id="liquidState">off</b></p>
+          </div>
+          <footer class="tile-meta">
+            <div><span class="tile-num">06</span><h3 id="t6">Liquid toggle</h3><p>Gooey SVG filter, trailing droplets</p></div>
+            <button class="copy-btn" type="button" data-copy="toggle" data-name="Liquid toggle" aria-label="Copy code for Liquid toggle">Copy code</button>
+          </footer>
+        </article>
+
+        <!-- 07 Jelly -->
+        <article class="tile t-jelly" aria-labelledby="t7">
+          <div class="tile-stage stage-jelly">
+            <ul class="jelly-list">
+              <li><button class="jelly" type="button" role="checkbox" aria-checked="true"><span class="jelly-box"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="jelly-tick" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="jelly-text">Sketch the idea</span></button></li>
+              <li><button class="jelly" type="button" role="checkbox" aria-checked="false"><span class="jelly-box"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="jelly-tick" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="jelly-text">Wobble the details</span></button></li>
+              <li><button class="jelly" type="button" role="checkbox" aria-checked="false"><span class="jelly-box"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="jelly-tick" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="jelly-text">Ship it on Friday</span></button></li>
+            </ul>
+          </div>
+          <footer class="tile-meta">
+            <div><span class="tile-num">07</span><h3 id="t7">Jelly checkbox</h3><p>Squash, stretch, settle</p></div>
+            <button class="copy-btn" type="button" data-copy="jelly" data-name="Jelly checkbox" aria-label="Copy code for Jelly checkbox">Copy code</button>
+          </footer>
+        </article>
+
+        <!-- 08 Text -->
+        <article class="tile t-text" aria-labelledby="t8">
+          <div class="tile-stage stage-text">
+            <ul class="text-links">
+              <li><a class="scramble-link" href="#lab" data-scramble aria-label="View the archive"><span class="scr" aria-hidden="true">View the archive</span><span class="arrow" aria-hidden="true">&nearr;</span></a></li>
+              <li><a class="roll-link" href="#principles" aria-label="Read the notes"><span class="roll" aria-hidden="true">Read the notes</span></a></li>
+              <li><a class="split-link" href="#top" aria-label="Back to top"><span class="sp sp-top" aria-hidden="true">Back to top</span><span class="sp sp-bot" aria-hidden="true">Back to top</span><span class="sp-mid" aria-hidden="true">lift off</span></a></li>
+            </ul>
+          </div>
+          <footer class="tile-meta">
+            <div><span class="tile-num">08</span><h3 id="t8">Text links</h3><p>Scramble, letter roll, hover split</p></div>
+            <button class="copy-btn" type="button" data-copy="text" data-name="Text links" aria-label="Copy code for Text links">Copy code</button>
+          </footer>
+        </article>
+      </div>
+    </section>
+
+    <section class="principles" id="principles" aria-labelledby="prTitle">
+      <h2 id="prTitle">Three rules on the bench</h2>
+      <ol>
+        <li><span>i.</span><h3>Feedback first</h3><p>Every press answers within a frame. Motion explains what just happened, not what the designer wanted to show off.</p></li>
+        <li><span>ii.</span><h3>Physical, not literal</h3><p>Fur, cloth and jelly are borrowed for how they respond, never for decoration. Springs settle, they never loop.</p></li>
+        <li><span>iii.</span><h3>Calm by request</h3><p>With reduced motion on, every component still works; the wobble simply steps aside.</p></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <a class="back" href="https://github.com/tabishhassan5121472?tab=repositories">&larr; More projects</a>
+    <p>Designed &amp; built by <a href="https://github.com/tabishhassan5121472" target="_blank" rel="noopener">Tabish Hassan</a></p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="toastText">Copied</span></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
